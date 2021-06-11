@@ -13,41 +13,23 @@ const BoardComponent: FunctionComponent<BoardComponentProps> = () => {
     const {board, loaded} = useContext(GameContext) //Hook form of Context.Consumer, used to access the context
 
     return (
-        /*Apply css on div below*/
-        <div className={styles.container}>
-            {/*
-                The {...} notation is JSX allowing us to blend HTML and JS/TS together
-                The first map call returns an array of "divs" which are rendered.
-                Keys helps react identify where a change has happend and thus which component to rerender upon changes
-                The last map returns an array of space components, note that a prop/argument is passed ("space")
-                The result of the code segment below will be something like:
-                    <div key="spaceArray0">
-                        <SpaceComponent key="space0" space={SOME_SPACE_OBJECT}/>
-                        ...
-                        <SpaceComponent key="space7" space={SOME_SPACE_OBJECT}/>
-                    </div>
-                    ....
-                    <div key="spaceArray7">
-                        <SpaceComponent key="space0" space={SOME_SPACE_OBJECT}/>
-                        ...
-                        <SpaceComponent key="space7" space={SOME_SPACE_OBJECT}/>
-                    </div>
-
-            */}
-            {loaded ? (
-
-                board.spaceDtos.map((spaceArray, index) =>
-                    <div key={"spaceArray" + index}>
+            loaded ?
+                <div>
+                    <h1>{board.boardName}</h1>
+                    <div className={styles.container}>
+                        { board.spaceDtos.map((spaceArray, index) =>
+                            <div key={"spaceArray" + index}>
                         {
-                            spaceArray.map((space, index) => <SpaceComponent key={"space" + index} space={space}/>)
+                            spaceArray.map((space, index) =>
+                                <SpaceComponent key={"space" + index} space={space}/>)
                         }
                     </div>
-                )
-
-            ) : <h1>loading...</h1>}
-
-
-        </div>
+                    )
+                    }
+                </div>
+            </div>
+                :
+    <div/>
     )
 }
 

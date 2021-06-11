@@ -10,7 +10,7 @@ export type GameContextType = {
     setCurrentPlayerOnSpace: (space: Space) => Promise<void>,
     switchCurrentPlayer: () => Promise<void>,
     selectGame : (game : Game) => Promise<void>,
-    getGames : () => Promise<void>
+    getGames : () => Promise<void>,
 }
 //Define a new context of type GameContextType
 //Below we define the "default" values which are set upon initialization of the context
@@ -29,10 +29,8 @@ const GameContext = createContext<GameContextType>({
         height: 0,
         width: 0
     },
-    setCurrentPlayerOnSpace: async () => {
-    },
-    switchCurrentPlayer: async () => {
-    }
+    setCurrentPlayerOnSpace: async () => {},
+    switchCurrentPlayer: async () => {}
 });
 
 export default GameContext

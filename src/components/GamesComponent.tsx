@@ -11,17 +11,9 @@ const GamesComponent: FunctionComponent<GameComponentProps> = () => {
     useEffect(() => {
         getGames().then(r => console.log("spillet hentet"))
     }, [])
-    
-   /* const onClickCreate = async () => {
-        board.height = 8
-        board.width = 8
-        board.boardName = boardName
-        board.boardId = -1
-        await createGame(board)
-    }
-    */
+
     return(
-        true ?
+        !loaded ?
             <div>
                 {
                 games.map((game:Game, index : number) =>

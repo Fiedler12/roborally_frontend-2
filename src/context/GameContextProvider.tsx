@@ -33,7 +33,6 @@ const GameContextProvider = ({children}: GameContextProviderPropsType) => {
                 })
 
             }
-
             setLoaded(true)
         }).catch(() => {
             console.error("Error while fetching board from backend")
@@ -110,6 +109,10 @@ const GameContextProvider = ({children}: GameContextProviderPropsType) => {
         })
     }, [currentPlayer, currentPlayerIndex, gameId, gameName, height, players, spaces, width])
 
+    const unselectGame = useCallback(async () => {
+        setGameId(-1);
+        setLoaded(false)
+    }, [])
 
     const selecPlayerOnspace = useCallback(async (space : Space) => {
     if (!space.playerId) {
