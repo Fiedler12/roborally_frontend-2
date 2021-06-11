@@ -10,6 +10,7 @@ export type GameContextType = {
     setCurrentPlayerOnSpace: (space: Space) => Promise<void>,
     switchCurrentPlayer: () => Promise<void>,
     selectGame : (game : Game) => Promise<void>,
+    unselectGame: () => Promise<void>,
     getGames : () => Promise<void>,
 }
 //Define a new context of type GameContextType
@@ -18,6 +19,7 @@ export type GameContextType = {
 const GameContext = createContext<GameContextType>({
     games : [],
     selectGame: async () => {},
+    unselectGame: async () => {},
     getGames : async  () => {},
     loaded : false,
     board: {

@@ -17,7 +17,7 @@ const GameContextProvider = ({children}: GameContextProviderPropsType) => {
     const [games, setGames] = useState<Game[]>([])
     const [loaded, setLoaded] = useState<boolean>(false)
     useEffect(() => {
-        GameApi.getBoard(1).then(board => {
+        GameApi.getBoard(gameId).then(board => {
             setSpaces(board.spaceDtos)
             setPlayers(board.playerDtos)
             setWidth(board.width)
@@ -137,7 +137,7 @@ const GameContextProvider = ({children}: GameContextProviderPropsType) => {
 
 
     const selectGame = useCallback(async (game : Game) => {
-        if (game.started) {
+        if (!game.started) {
             GameApi.getBoard(game.id).then(board => {
                 if (board.playerDtos.length > 0) {
                         setSpaces(board.spaceDtos)
@@ -176,7 +176,8 @@ const GameContextProvider = ({children}: GameContextProviderPropsType) => {
                     board : board,
                     setCurrentPlayerOnSpace: setPlayerOnSpace,
                     switchCurrentPlayer : switchToNextPlayer,
-                    getGames: getGames
+                    getGames: getGames,
+                    unselectGame: unselectGame
                 }
             }>
             {children} {/*See: https://reactjs.org/docs/composition-vs-inheritance.html*/}
