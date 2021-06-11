@@ -4,6 +4,8 @@ import {Player} from "../types/Player";
 import {Board} from "../types/Board";
 import {Space} from "../types/Space";
 import GameApi from "../api/GameApi";
+import {Game} from "../types/Game";
+import {setInterval} from "timers";
 
 type GameContextProviderPropsType = {
     children: ReactNode
@@ -11,6 +13,8 @@ type GameContextProviderPropsType = {
 
 
 const GameContextProvider = ({children}: GameContextProviderPropsType) => {
+    const [game] = useState<Game[]>([])
+    const [games, setGames] = useState<Game[]>([])
     const [loaded, setLoaded] = useState<boolean>(false)
     useEffect(() => {
         GameApi.getBoard(1).then(board => {
@@ -77,6 +81,13 @@ const GameContextProvider = ({children}: GameContextProviderPropsType) => {
 
     }, [currentPlayer, currentPlayerIndex, gameId, players, spaces])
 
+    const getGames = useCallback(async () => {
+        await GameApi.getGames().then((value)=>{
+            setGames(value)
+        }).catch(()=>console.error("Error while switching player"))
+
+    }, [currentPlayerIndex, gameId, playerCount, players])
+
     const switchToNextPlayer = useCallback(async () => {
         await GameApi.switchPlayer(gameId).then(()=>{
             const newPlayerIndex = (currentPlayerIndex + 1) % playerCount
@@ -100,19 +111,78 @@ const GameContextProvider = ({children}: GameContextProviderPropsType) => {
     }, [currentPlayer, currentPlayerIndex, gameId, gameName, height, players, spaces, width])
 
 
+    const selecPlayerOnspace = useCallback(async (space : Space) => {
+    if (!space.playerId) {
+    await GameApi.moveCurrentPlayer(gameId, {...space, playerId: currentPlayer.playerId}).then(() => {
+        let tempSpaces = [...spaces]
+        tempSpaces[space.x][space.y].playerId = currentPlayer.playerId
+        if (currentPlayer.x !== undefined && currentPlayer.y !== undefined) {
+            tempSpaces[currentPlayer.x][currentPlayer.y].playerId = undefined
+        }
+        setSpaces(tempSpaces)
+        let tempPlayers = [...players]
+        tempPlayers[currentPlayerIndex].x = space.x;
+        tempPlayers[currentPlayerIndex].y = space.y;
+        setPlayers(tempPlayers)
+        setCurrentPlayer({...currentPlayer, x: space.x, y: space.y})
+
+    }).catch((e) => {
+        console.error("error" + e)
+    })
+    }
+    }, [currentPlayer, currentPlayerIndex, gameId, players, spaces])
+
+
+    const selectGame = useCallback(async (game : Game) => {
+        if (game.started) {
+            GameApi.getBoard(game.id).then(board => {
+                if (board.playerDtos.length > 0) {
+                        setSpaces(board.spaceDtos)
+                        setSpaces(board.spaceDtos)
+                        setPlayers(board.playerDtos)
+                        setWidth(board.width)
+                        setHeight(board.height)
+                        setGameId(board.boardId)
+                        setGameName(board.boardName)
+                        if (board.currentPlayerDto) {
+                            setCurrentPlayer(board.currentPlayerDto)
+                            board.playerDtos.forEach((player, index) => {
+                                if(player.playerId === board.currentPlayerDto?.playerId) {
+                                    setCurrentPlayerIndex(index)
+                                }
+                            })
+                        }
+                setLoaded(true)
+                    }
+            }).catch(() => {
+            console.error("Error while fetching board from backend")
+            })
+        } else {
+                console.error("Selected Game '" + game.id + "' is not started yet")
+        }
+    }, [])
+
+
     return (
         <GameContext.Provider
             value={
                 {
-                    loaded: loaded,
-                    board: board,
+                    games : games,
+                    loaded : loaded,
+                    selectGame : selectGame,
+                    board : board,
                     setCurrentPlayerOnSpace: setPlayerOnSpace,
-                    switchCurrentPlayer: switchToNextPlayer
+                    switchCurrentPlayer : switchToNextPlayer,
+                    getGames: getGames
                 }
             }>
             {children} {/*See: https://reactjs.org/docs/composition-vs-inheritance.html*/}
         </GameContext.Provider>
     )
+
+
+
+
 }
 
 export default GameContextProvider

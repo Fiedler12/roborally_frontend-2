@@ -1,17 +1,24 @@
 import {createContext} from "react";
 import {Board} from "../types/Board";
 import {Space} from "../types/Space";
+import {Game} from "../types/Game";
 
 export type GameContextType = {
+    games : Game[],
     loaded : boolean,
     board: Board,
     setCurrentPlayerOnSpace: (space: Space) => Promise<void>,
-    switchCurrentPlayer: () => Promise<void>
+    switchCurrentPlayer: () => Promise<void>,
+    selectGame : (game : Game) => Promise<void>,
+    getGames : () => Promise<void>
 }
 //Define a new context of type GameContextType
 //Below we define the "default" values which are set upon initialization of the context
 
 const GameContext = createContext<GameContextType>({
+    games : [],
+    selectGame: async () => {},
+    getGames : async  () => {},
     loaded : false,
     board: {
         playerDtos: [],

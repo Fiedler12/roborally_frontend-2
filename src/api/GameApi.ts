@@ -1,6 +1,7 @@
 import axios from "axios";
 import {Board} from "../types/Board";
 import {Space} from "../types/Space";
+import {Game} from "../types/Game";
 
 class GameApi{
     private static instance : GameApi;
@@ -26,7 +27,7 @@ class GameApi{
         return axios.put(`${this.BACKEND_URL}/board/${boardId}/switchplayer`)
     }
     public getGames(){
-        return axios.get<Board[]>('${this.BACKEND_URL}/games')
+        return axios.get<Game[]>(`${this.BACKEND_URL}/games`).then(value => value.data)
     }
 }
 
