@@ -16,6 +16,7 @@ const GameContextProvider = ({children}: GameContextProviderPropsType) => {
     const [game] = useState<Game[]>([])
     const [games, setGames] = useState<Game[]>([])
     const [loaded, setLoaded] = useState<boolean>(false)
+    /*
     useEffect(() => {
         GameApi.getBoard(gameId).then(board => {
             setSpaces(board.spaceDtos)
@@ -38,6 +39,8 @@ const GameContextProvider = ({children}: GameContextProviderPropsType) => {
             console.error("Error while fetching board from backend")
         })
     }, [])
+
+     */
     //The code below is executed when the provider is rendered (inside App.tsx)
     //The code should fetch the data from the API instead of using a static assignment
     //Define a useState variable, note that useState returns an array, containing that state itself aswell as
