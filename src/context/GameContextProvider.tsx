@@ -5,7 +5,6 @@ import {Board} from "../types/Board";
 import {Space} from "../types/Space";
 import GameApi from "../api/GameApi";
 import {Game} from "../types/Game";
-import {setInterval} from "timers";
 
 type GameContextProviderPropsType = {
     children: ReactNode
@@ -164,6 +163,43 @@ const GameContextProvider = ({children}: GameContextProviderPropsType) => {
                 console.error("Selected Game '" + game.id + "' is not started yet")
         }
     }, [])
+
+    useEffect(() => {
+        const interval = setInterval( async () => {
+            if (loaded && gameId >= 0) {
+                GameApi.getBoard(gameId).then(board => {
+                    if (gameId === board.boardId) {
+                        setSpaces(board.spaceDtos)
+                        setPlayers(board.playerDtos)
+                        setWidth(board.width)
+                        setHeight(board.height)
+                        setGameId(board.boardId)
+                        setGameName(board.boardName)
+                        if (board.currentPlayerDto) {
+                            setCurrentPlayer(board.currentPlayerDto)
+                            board.playerDtos.forEach((player, index) => {
+                                if (player.playerId === board.currentPlayerDto?.playerId) {
+                                    setCurrentPlayerIndex(index)
+                                }
+                            })
+                        } else {
+                            console.error("load outdated")
+                        }
+                    }
+                }).catch(() => {
+                    console.error("board could not be loaded")
+                })
+            } else {
+                GameApi.getGames().then(games => {
+                    setGames(games)
+                }).catch(() => {
+                    console.error("games could not be loaded")
+                });
+            }
+        }, 5000)
+
+            return () => clearInterval(interval)
+    }, [loaded, gameId])
 
 
     return (
