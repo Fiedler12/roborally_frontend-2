@@ -1,8 +1,8 @@
 import {user} from "./user";
 
 export type Game = {
-    id : number
     name : string
+    id : number
     players : user[]
     started : boolean
 }

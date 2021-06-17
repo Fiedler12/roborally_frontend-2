@@ -5,6 +5,7 @@ import {Board} from "../types/Board";
 import {Space} from "../types/Space";
 import GameApi from "../api/GameApi";
 import {Game} from "../types/Game";
+import BoardComponent from "../components/BoardComponent";
 
 type GameContextProviderPropsType = {
     children: ReactNode
@@ -42,6 +43,9 @@ const GameContextProvider = ({children}: GameContextProviderPropsType) => {
     //Define a useState variable, note that useState returns an array, containing that state itself aswell as
     // a function to set a new state value, here we use array destructuring (the [..., ...] notation).
     // we also declare that the state variable and setter should be of type /take type Player[]
+
+
+
     const [players, setPlayers] = useState<Player[]>([])
     const playerCount = useMemo(() => players.length, [players])
     const [currentPlayerIndex, setCurrentPlayerIndex] = useState<number>(0)
@@ -50,7 +54,7 @@ const GameContextProvider = ({children}: GameContextProviderPropsType) => {
     const [width, setWidth] = useState<number>(0)
     const [height, setHeight] = useState<number>(0)
     const [gameId, setGameId] = useState<number>(0)
-    const [gameName, setGameName] = useState<string>("hi")
+    const [gameName, setGameName] = useState<string>("Hi")
 
     //Define a function used to set a player ona  specific space
     const setPlayerOnSpace = useCallback(async (space: Space) => {
@@ -80,8 +84,14 @@ const GameContextProvider = ({children}: GameContextProviderPropsType) => {
     }, [currentPlayer, currentPlayerIndex, gameId, players, spaces])
 
     const createBoard = useCallback(async () => {
-        await GameApi.createBoard().then(() => {
-            createBoard()
+        const board : any = {
+            boardName : "Board2",
+            height : 8,
+            width : 8,
+            boardId : 0
+        }
+        await GameApi.createBoard(board).then(() => {
+            getGames()
         }).catch(() => console.error("Error creating"))
     }, [])
 
@@ -102,6 +112,7 @@ const GameContextProvider = ({children}: GameContextProviderPropsType) => {
         }).catch(()=>console.error("Error while switching player"))
         
     }, [currentPlayerIndex, gameId, playerCount, players])
+
     const board = useMemo<Board>(() => {
         return ({
             spaceDtos: spaces,

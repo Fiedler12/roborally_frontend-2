@@ -29,8 +29,8 @@ class GameApi{
     public getGames(){
         return axios.get<Game[]>(`${this.BACKEND_URL}/games`).then(value => value.data)
     }
-    public createBoard() {
-        return axios.put(`${this.BACKEND_URL}/board`)
+    public createBoard(board : Board) {
+        return axios.post(`${this.BACKEND_URL}/board`, board)
     }
 }
 

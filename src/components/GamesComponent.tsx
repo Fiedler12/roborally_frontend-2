@@ -17,7 +17,7 @@ const GamesComponent: FunctionComponent<GameComponentProps> = () => {
             !loaded ?
 
                 <div>
-                    <button> Create game {createBoard}</button>
+                    <button onClick={() => createBoard()}> Create game </button>
                     {
                         games.map((game: Game, index: number) =>
                             <GameComponent key={"game" + index} game={game}/>
