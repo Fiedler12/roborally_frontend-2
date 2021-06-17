@@ -14,7 +14,8 @@ const BoardComponent: FunctionComponent<BoardComponentProps> = () => {
 
     return (
             loaded ?
-                <div>
+                <div className={styles.background}>
+                    <button className={styles.button}> test</button>
                     <h1 onClick={unselectGame}> {board.boardName}</h1>
                     <h2 onClick={unselectGame}> {"Exit game"}</h2>
                     <div className={styles.container}>

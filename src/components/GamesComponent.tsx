@@ -3,7 +3,8 @@ import GameContext from "../context/GameContext";
 import {GameComponent} from "./Gamecomponent";
 import {Game} from "../types/Game";
 import GameApi from "../api/GameApi";
-
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 type GameComponentProps = {}
 
