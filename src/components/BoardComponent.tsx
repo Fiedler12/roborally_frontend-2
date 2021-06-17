@@ -16,6 +16,7 @@ const BoardComponent: FunctionComponent<BoardComponentProps> = () => {
             loaded ?
                 <div>
                     <h1 onClick={unselectGame}> {board.boardName}</h1>
+                    <h2 onClick={unselectGame}> {"Exit game"}</h2>
                     <div className={styles.container}>
                         { board.spaceDtos.map((spaceArray, index) =>
                             <div key={"spaceArray" + index}>
