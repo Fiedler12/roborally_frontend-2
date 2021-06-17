@@ -15,8 +15,11 @@ const BoardComponent: FunctionComponent<BoardComponentProps> = () => {
     return (
             loaded ?
                 <div>
-                    <h1 onClick={unselectGame}> {board.boardName}</h1>
-                    <h2 onClick={unselectGame}> {"Exit game"}</h2>
+
+                    <h1>{board.boardName}</h1>
+
+                    <button type="button" onClick={unselectGame} > Exit Game</button>
+
                     <div className={styles.container}>
                         { board.spaceDtos.map((spaceArray, index) =>
                             <div key={"spaceArray" + index}>
@@ -28,9 +31,14 @@ const BoardComponent: FunctionComponent<BoardComponentProps> = () => {
                     )
                     }
                 </div>
+
+
+
             </div>
                 :
     <div/>
+
+
     )
 }
 
