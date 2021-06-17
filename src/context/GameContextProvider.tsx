@@ -79,6 +79,13 @@ const GameContextProvider = ({children}: GameContextProviderPropsType) => {
 
     }, [currentPlayer, currentPlayerIndex, gameId, players, spaces])
 
+    const createBoard = useCallback(async () => {
+        await GameApi.createBoard().then(() => {
+            createBoard()
+        }).catch(() => console.error("Error creating"))
+    }, [])
+
+
     const getGames = useCallback(async () => {
         await GameApi.getGames().then((value)=>{
             setGames(value)
@@ -113,7 +120,7 @@ const GameContextProvider = ({children}: GameContextProviderPropsType) => {
         setLoaded(false)
     }, [])
 
-    const selecPlayerOnspace = useCallback(async (space : Space) => {
+    const selectPlayerOnSpace = useCallback(async (space : Space) => {
     if (!space.playerId) {
     await GameApi.moveCurrentPlayer(gameId, {...space, playerId: currentPlayer.playerId}).then(() => {
         let tempSpaces = [...spaces]
@@ -213,7 +220,8 @@ const GameContextProvider = ({children}: GameContextProviderPropsType) => {
                     setCurrentPlayerOnSpace: setPlayerOnSpace,
                     switchCurrentPlayer : switchToNextPlayer,
                     getGames: getGames,
-                    unselectGame: unselectGame
+                    unselectGame: unselectGame,
+                    createBoard: createBoard,
                 }
             }>
             {children} {/*See: https://reactjs.org/docs/composition-vs-inheritance.html*/}

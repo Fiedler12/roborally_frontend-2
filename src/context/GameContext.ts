@@ -12,6 +12,7 @@ export type GameContextType = {
     selectGame : (game : Game) => Promise<void>,
     unselectGame: () => Promise<void>,
     getGames : () => Promise<void>,
+    createBoard : () => Promise<void>
 }
 //Define a new context of type GameContextType
 //Below we define the "default" values which are set upon initialization of the context
@@ -21,6 +22,7 @@ const GameContext = createContext<GameContextType>({
     selectGame: async () => {},
     unselectGame: async () => {},
     getGames : async  () => {},
+    createBoard : async () => {},
     loaded : false,
     board: {
         playerDtos: [],
