@@ -3,6 +3,7 @@ import GameContext from "../context/GameContext";
 import {GameComponent} from "./Gamecomponent";
 import {Game} from "../types/Game";
 import GameApi from "../api/GameApi";
+import styles from "../styling/GamesComponent.module.scss";
 
 
 type GameComponentProps = {}
@@ -17,7 +18,8 @@ const GamesComponent: FunctionComponent<GameComponentProps> = () => {
             !loaded ?
 
                 <div>
-                    <button onClick={() => createBoard()}> Create game </button>
+                    <h1 className={styles.james}>Roborally</h1>
+                    <button onClick={() => createBoard()} className={styles.column}> Create game </button>
                     {
                         games.map((game: Game, index: number) =>
                             <GameComponent key={"game" + index} game={game}/>
