@@ -2,6 +2,7 @@ import axios from "axios";
 import {Board} from "../types/Board";
 import {Space} from "../types/Space";
 import {Game} from "../types/Game";
+import {Player} from "../types/Player";
 
 class GameApi{
     private static instance : GameApi;
@@ -31,6 +32,13 @@ class GameApi{
     }
     public createBoard(board : Board) {
         return axios.post(`${this.BACKEND_URL}/board`, board)
+    }
+// her har vi en callback til backend med player som objeckt
+    public addPlayer (boardId : number, player : Player){
+        return axios.post(`${this.BACKEND_URL}/board/${boardId}/player`, player)
+    }
+    public createNewGame (board : Board){
+        return axios.post(`${this.BACKEND_URL}/board`,board)
     }
 }
 
