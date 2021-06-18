@@ -222,6 +222,28 @@ const GameContextProvider = ({children}: GameContextProviderPropsType) => {
             return () => clearInterval(interval)
     }, [loaded, gameId])
 
+    //standard construction for player
+const player= useMemo<Player>(()=>{
+    return({
+        boardId : -1,
+        playerId : -1,
+        playerName :"",
+        playerColor : "red"
+    })
+},[])
+
+    // funktion til at sende en player til backend.
+    const addPlayer =useCallback(async (boardId : number, player : Player) => {
+        await GameApi.addPlayer(boardId,player).then(()=>{
+
+        }).catch(()=> console.error("error to create player"))
+    },[])
+
+    const createNewGame =useCallback(async (board : Board) => {
+        await GameApi.createNewGame(board).then(()=>{
+
+        }).catch(() => console.error(("errer create new Game")))
+    },[])
 
     return (
         <GameContext.Provider
@@ -236,6 +258,9 @@ const GameContextProvider = ({children}: GameContextProviderPropsType) => {
                     getGames: getGames,
                     unselectGame: unselectGame,
                     createBoard: createBoard,
+                    player: player,
+                    addPlayer : addPlayer,
+                    createNewGame : createNewGame,
                 }
             }>
             {children} {/*See: https://reactjs.org/docs/composition-vs-inheritance.html*/}

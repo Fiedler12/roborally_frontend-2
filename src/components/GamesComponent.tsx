@@ -3,12 +3,19 @@ import GameContext from "../context/GameContext";
 import {GameComponent} from "./Gamecomponent";
 import {Game} from "../types/Game";
 import GameApi from "../api/GameApi";
+import styles from "../styling/GamesComponent.module.scss";
 
 
 type GameComponentProps = {}
 
 const GamesComponent: FunctionComponent<GameComponentProps> = () => {
-    const {games, loaded, getGames, createBoard} = useContext(GameContext)
+
+    const {games, loaded, getGames, createBoard, board, createNewGame} = useContext(GameContext)
+
+    const onClickCreateBoard =async ()=> {
+        board.boardId =-1
+        await createNewGame (board)
+    }
     useEffect(() => {
         getGames().then(r => console.log("spillet hentet"))
     }, [])
@@ -16,8 +23,9 @@ const GamesComponent: FunctionComponent<GameComponentProps> = () => {
         return (
             !loaded ?
 
-                <div>
-                    <button onClick={() => createBoard()}> Create game </button>
+                <div className={styles.box1}>
+                    <h1 className={styles.header}>Roborally </h1>
+                    <button onClick={onClickCreateBoard} className={styles.column}> Create game </button>
                     {
                         games.map((game: Game, index: number) =>
                             <GameComponent key={"game" + index} game={game}/>
