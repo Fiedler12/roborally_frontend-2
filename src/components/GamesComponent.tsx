@@ -17,8 +17,8 @@ const GamesComponent: FunctionComponent<GameComponentProps> = () => {
         return (
             !loaded ?
 
-                <div>
-                    <h1 className={styles.james}>Roborally</h1>
+                <div className={styles.box1}>
+                    <h1 className={styles.header}>Roborally </h1>
                     <button onClick={() => createBoard()} className={styles.column}> Create game </button>
                     {
                         games.map((game: Game, index: number) =>

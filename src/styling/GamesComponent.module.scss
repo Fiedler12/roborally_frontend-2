@@ -1,7 +1,11 @@
-.james{
+
+.header{
   font-size: 100px;
-  color: brown;
+  color: goldenrod;
   text-align: center;
+  text-decoration: underline;
+  text-shadow: 2px 2px 100px darkblue;
+  font-family: "Bauhaus 93";
 }
 
 .background{
@@ -12,3 +16,13 @@
   float: right;
   width: 33.33%;
 }
+
+.box1 {
+  background: url("images/Roborally.jpg") no-repeat;
+  background-size: contain;
+  border: 6px solid #333;
+  background-repeat: repeat-x;
+}
+
+
+

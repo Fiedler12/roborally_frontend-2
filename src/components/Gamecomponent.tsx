@@ -17,13 +17,14 @@ export const GameComponent: FunctionComponent<GameComponentProps> = ({game}) => 
     }
 
     return (
-
+        <div className={styles.backgroundboard}>
         <div onClick={onClickGame} className={styles.columns}>
 
-            <h2 >{game.id}: {game.name}:</h2>
-            <ul>
-                {game.players.map((user, index) => <li key={game.name}> {user.playerId} {user.playerName} </li>)}
+            <h2 className={styles.textcolor} >{game.id}: {game.name}:</h2>
+            <ul className={styles.textcolor}>
+                {game.users.map((user, index) => <li key={game.name}> {user.playerId} {user.playerName} </li>)}
             </ul>
+        </div>
         </div>
     )
 }
