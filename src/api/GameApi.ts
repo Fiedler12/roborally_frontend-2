@@ -32,6 +32,9 @@ class GameApi{
     public createBoard(board : Board) {
         return axios.post(`${this.BACKEND_URL}/board`, board)
     }
+    public createGame() {
+        return axios.post(`${this.BACKEND_URL}/newgame`)
+    }
 }
 
 export default GameApi.getInstance()

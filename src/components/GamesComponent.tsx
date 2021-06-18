@@ -8,7 +8,7 @@ import GameApi from "../api/GameApi";
 type GameComponentProps = {}
 
 const GamesComponent: FunctionComponent<GameComponentProps> = () => {
-    const {games, loaded, getGames, createBoard} = useContext(GameContext)
+    const {games, loaded, getGames, createGame} = useContext(GameContext)
     useEffect(() => {
         getGames().then(r => console.log("spillet hentet"))
     }, [])
@@ -17,7 +17,7 @@ const GamesComponent: FunctionComponent<GameComponentProps> = () => {
             !loaded ?
 
                 <div>
-                    <button onClick={() => createBoard()}> Create game </button>
+                    <button onClick={() => createGame}> Create game </button>
                     {
                         games.map((game: Game, index: number) =>
                             <GameComponent key={"game" + index} game={game}/>

@@ -86,16 +86,10 @@ const GameContextProvider = ({children}: GameContextProviderPropsType) => {
 
     }, [currentPlayer, currentPlayerIndex, gameId, players, spaces])
 
-    const createBoard = useCallback(async () => {
-        const board : any = {
-            boardName : "Board2",
-            height : 8,
-            width : 8,
-            boardId : 0
-        }
-        await GameApi.createBoard(board).then(() => {
+    const createGame = useCallback(async () => {
+        await GameApi.createGame().then(() => {
             getGames()
-        }).catch(() => console.error("Error creating"))
+        }).catch(() => console.error("error creating"))
     }, [])
 
 
@@ -235,7 +229,7 @@ const GameContextProvider = ({children}: GameContextProviderPropsType) => {
                     switchCurrentPlayer : switchToNextPlayer,
                     getGames: getGames,
                     unselectGame: unselectGame,
-                    createBoard: createBoard,
+                    createGame: createGame
                 }
             }>
             {children} {/*See: https://reactjs.org/docs/composition-vs-inheritance.html*/}
