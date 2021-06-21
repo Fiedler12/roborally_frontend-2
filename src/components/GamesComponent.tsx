@@ -10,7 +10,7 @@ type GameComponentProps = {}
 
 const GamesComponent: FunctionComponent<GameComponentProps> = () => {
 
-    const {games, loaded, getGames, createBoard, board, createNewGame} = useContext(GameContext)
+    const {games, loaded, getGames, board, createNewGame} = useContext(GameContext)
 
     const onClickCreateBoard =async ()=> {
         board.boardId =-1

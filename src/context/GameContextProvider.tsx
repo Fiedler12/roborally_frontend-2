@@ -91,7 +91,6 @@ const GameContextProvider = ({children}: GameContextProviderPropsType) => {
             boardName : "Board2",
             height : 8,
             width : 8,
-            boardId : 0
         }
         await GameApi.createBoard(board).then(() => {
             getGames()
@@ -240,9 +239,9 @@ const player= useMemo<Player>(()=>{
     },[])
 
     const createNewGame =useCallback(async (board : Board) => {
-        await GameApi.createNewGame(board).then(()=>{
-
-        }).catch(() => console.error(("errer create new Game")))
+        await GameApi.createNewGame().then(()=>{
+            GameApi.getGames()
+        }).catch(() => console.error(("error create new Game")))
     },[])
 
     return (
