@@ -32,8 +32,8 @@ class GameApi{
     }
 
 // her har vi en callback til backend med player som objeckt
-    public addPlayer (boardId : number, player : Player){
-        return axios.post(`${this.BACKEND_URL}/board/${boardId}/player`, player)
+    public addPlayer (boardId : number){
+        return axios.post(`${this.BACKEND_URL}/board/${boardId}/player`)
     }
     public createNewGame (board : Board){
         return axios.post(`${this.BACKEND_URL}/board`,board)

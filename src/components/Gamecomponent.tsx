@@ -10,15 +10,20 @@ export type GameComponentProps = {
 }
 
 export const GameComponent: FunctionComponent<GameComponentProps> = ({game}) => {
-    const {selectGame} = useContext(GameContext)
+    const {selectGame, addPlayer} = useContext(GameContext)
+
 
     const onClickGame = async () => {
         selectGame(game)
+    }
+    const onClickAddPlayer =async () => {
+        addPlayer(game.id)
     }
 
     return (
         <div className={styles.backgroundboard}>
             <div className={styles.columns}>
+                <button onClick={onClickAddPlayer}> Add Player</button>
                 <h1 onClick={onClickGame}className={styles.textcolor} >{game.id}: {game.name}:</h1>
                 <ul className={styles.textcolor}>
                 {game.users.map((user, index) => <li key={game.name}> {user.playerId} {user.playerName} </li>)}

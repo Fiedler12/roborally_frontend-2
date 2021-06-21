@@ -218,9 +218,9 @@ const player= useMemo<Player>(()=>{
 },[])
 
     // funktion til at sende en player til backend.
-    const addPlayer =useCallback(async (boardId : number, player : Player) => {
-        await GameApi.addPlayer(boardId,player).then(()=>{
-
+    const addPlayer =useCallback(async (boardId : number) => {
+        await GameApi.addPlayer(boardId).then(()=>{
+            GameApi.getGames()
         }).catch(()=> console.error("error to create player"))
     },[])
 

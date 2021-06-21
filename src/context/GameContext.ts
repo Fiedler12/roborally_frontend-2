@@ -15,7 +15,7 @@ export type GameContextType = {
     switchCurrentPlayer: () => Promise<void>,
     createNewGame : (board: Board) => Promise<void>
     player  : Player,
-    addPlayer : (boardId : number, player : Player) => Promise<void>,
+    addPlayer : (boardId : number) => Promise<void>,
 }
 //Define a new context of type GameContextType
 //Below we define the "default" values which are set upon initialization of the context
