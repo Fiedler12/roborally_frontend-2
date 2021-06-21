@@ -26,11 +26,23 @@ const GamesComponent: FunctionComponent<GameComponentProps> = () => {
                 <div className={styles.box1}>
                     <h1 className={styles.header}>Roborally </h1>
                     <button onClick={onClickCreateBoard} className={styles.column}> Create game </button>
+                    <div className={styles.dropdown}>
+                        <button className={styles.dropbtn}>Player Amount</button>
+
+                        <div className={styles.dropdowncontent}>
+                            <a href="#">2</a>
+                            <a href="#">3</a>
+                            <a href="#">4</a>
+                            <a href="#">5</a>
+                            <a href="#">6</a>
+                        </div>
+
                     {
                         games.map((game: Game, index: number) =>
                             <GameComponent key={"game" + index} game={game}/>
                         )
                     }
+                    </div>
                 </div>
                 :
                 <div/>
