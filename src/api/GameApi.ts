@@ -35,8 +35,8 @@ class GameApi{
     public addPlayer (boardId : number){
         return axios.post(`${this.BACKEND_URL}/board/${boardId}/player`)
     }
-    public createNewGame (board : Board){
-        return axios.post(`${this.BACKEND_URL}/board`,board)
+    public createNewGame (){
+        return axios.post(`${this.BACKEND_URL}/newgame`)
     }
 }
 
