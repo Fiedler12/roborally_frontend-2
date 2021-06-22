@@ -16,6 +16,8 @@ export type GameContextType = {
     createNewGame : (board: Board) => Promise<void>
     player  : Player,
     addPlayer : (boardId : number) => Promise<void>,
+    removePlayer : (boardId : number, playerId : number) => Promise<void>,
+    removeBoard : (boardID : number) => Promise<void>,
 }
 //Define a new context of type GameContextType
 //Below we define the "default" values which are set upon initialization of the context
@@ -27,7 +29,8 @@ const GameContext = createContext<GameContextType>({
     getGames : async  () => {},
     addPlayer : async () => {},
     createNewGame : async () => {},
-
+    removePlayer : async () => {},
+    removeBoard : async  () => {},
     loaded : false,
     board: {
         playerDtos: [],
