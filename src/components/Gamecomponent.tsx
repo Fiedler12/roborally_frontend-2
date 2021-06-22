@@ -22,7 +22,7 @@ export const GameComponent: FunctionComponent<GameComponentProps> = ({game}) => 
 
     return (
         <div className={styles.backgroundboard}>
-            <div className={styles.columns}>
+            <div>
                 <button onClick={onClickAddPlayer}> Add Player</button>
                 <h1 onClick={onClickGame}className={styles.textcolor} >{game.id}: {game.name}:</h1>
                 <ul className={styles.textcolor}>
