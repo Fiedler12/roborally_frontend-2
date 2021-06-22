@@ -18,6 +18,7 @@ const GamesComponent: FunctionComponent<GameComponentProps> = () => {
         if (text != null) {
             board.boardName = text
             await createNewGame(board)
+
         }
     }
     useEffect(() => {
