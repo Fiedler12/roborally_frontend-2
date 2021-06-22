@@ -14,7 +14,11 @@ const GamesComponent: FunctionComponent<GameComponentProps> = () => {
 
     const onClickCreateBoard =async ()=> {
         board.boardId =-1
-        await createNewGame (board)
+        let text = (document.getElementById("boardName") as HTMLInputElement).value;
+        if (text != null) {
+            board.boardName = text
+            await createNewGame(board)
+        }
     }
     useEffect(() => {
         getGames().then(r => console.log("spillet hentet"))
@@ -25,11 +29,15 @@ const GamesComponent: FunctionComponent<GameComponentProps> = () => {
 
                 <div className={styles.box1}>
                     <h1 className={styles.header}>Roborally </h1>
+                    <input className={styles.color} placeholder={"Enter Board Name"} id={"boardName"}/>
+                    <br/>
+                    <br/>
                     <button onClick={onClickCreateBoard} className={styles.column}> Create game </button>
                     {
                         games.map((game: Game, index: number) =>
                             <GameComponent key={"game" + index} game={game}/>
                         )
+
                     }
                 </div>
                 :

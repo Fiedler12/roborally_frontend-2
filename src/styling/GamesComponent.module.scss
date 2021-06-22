@@ -14,7 +14,7 @@
 
 .column {
   float: right;
-  width: 33.33%;
+  width: 10%;
 }
 
 .box1 {
@@ -69,5 +69,20 @@
   background-color: blue;
 }
 
+.color{
+  float: right;
+  width: 20%;
+  color: black;
+  text-align: center;
+}
+
+.createBoard {
+  float: right;
+  width: 20%;
+  color: magenta;
+  text-align: center;
+  font-size: 30px;
+  background: red;
+}
 
 
