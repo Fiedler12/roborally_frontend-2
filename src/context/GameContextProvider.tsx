@@ -54,8 +54,8 @@ const GameContextProvider = ({children}: GameContextProviderPropsType) => {
     const [currentPlayerIndex, setCurrentPlayerIndex] = useState<number>(0)
     const [currentPlayer, setCurrentPlayer] = useState<Player>({playerId : -1,playerColor:"red",boardId : -1,playerName : ""})
     const [spaces, setSpaces] = useState<Space[][]>([])
-    const [width, setWidth] = useState<number>(0)
-    const [height, setHeight] = useState<number>(0)
+    const [width, setWidth] = useState<number>(8)
+    const [height, setHeight] = useState<number>(8)
     const [gameId, setGameId] = useState<number>(0)
     const [gameName, setGameName] = useState<string>("Hi")
 
@@ -86,17 +86,6 @@ const GameContextProvider = ({children}: GameContextProviderPropsType) => {
 
     }, [currentPlayer, currentPlayerIndex, gameId, players, spaces])
 
-    const createBoard = useCallback(async () => {
-        const board : any = {
-            boardName : "Board2",
-            height : 8,
-            width : 8,
-            boardId : 0
-        }
-        await GameApi.createBoard(board).then(() => {
-            getGames()
-        }).catch(() => console.error("Error creating"))
-    }, [])
 
 
     const getGames = useCallback(async () => {
@@ -156,8 +145,7 @@ const GameContextProvider = ({children}: GameContextProviderPropsType) => {
     }, [currentPlayer, currentPlayerIndex, gameId, players, spaces])
 
 
-    const selectGame = useCallback(async (game : Game) => {
-        if (!game.started) {
+    const selectGame = useCallback(async (game: Game) => {
             GameApi.getBoard(game.id).then(board => {
                 if (board.playerDtos.length > 0) {
                         setSpaces(board.spaceDtos)
@@ -180,9 +168,6 @@ const GameContextProvider = ({children}: GameContextProviderPropsType) => {
             }).catch(() => {
             console.error("Error while fetching board from backend")
             })
-        } else {
-                console.error("Selected Game '" + game.id + "' is not started yet")
-        }
     }, [])
 
     useEffect(() => {
@@ -233,9 +218,9 @@ const player= useMemo<Player>(()=>{
 },[])
 
     // funktion til at sende en player til backend.
-    const addPlayer =useCallback(async (boardId : number, player : Player) => {
-        await GameApi.addPlayer(boardId,player).then(()=>{
-
+    const addPlayer =useCallback(async (boardId : number) => {
+        await GameApi.addPlayer(boardId).then(()=>{
+            GameApi.getGames()
         }).catch(()=> console.error("error to create player"))
     },[])
 
@@ -257,7 +242,6 @@ const player= useMemo<Player>(()=>{
                     switchCurrentPlayer : switchToNextPlayer,
                     getGames: getGames,
                     unselectGame: unselectGame,
-                    createBoard: createBoard,
                     player: player,
                     addPlayer : addPlayer,
                     createNewGame : createNewGame,
