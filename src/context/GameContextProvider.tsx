@@ -86,6 +86,31 @@ const GameContextProvider = ({children}: GameContextProviderPropsType) => {
 
     }, [currentPlayer, currentPlayerIndex, gameId, players, spaces])
 
+    const setSpecificPlayerOnSpace = useCallback(async (space: Space, player : Player) => {
+        //Check if space already has a player standing on it
+        if (!space.playerId) {
+            await GameApi.moveSpecificPlayer(gameId, player.playerId, space).then(() => {
+                let tempSpaces = [...spaces] //Use spread operator to copy spaces array, needed for making immutable changes
+                //See https://bit.ly/2My8Bfz, until the section about Immutable.js
+                tempSpaces[space.x][space.y].playerId = currentPlayer.playerId //Set the player on the new space they clicked on
+
+                if (currentPlayer.x !== undefined && currentPlayer.y !== undefined) { //If the player was standing on a space previously, remove them from that space
+                    tempSpaces[currentPlayer.x][currentPlayer.y].playerId = undefined
+                }
+                setSpaces(tempSpaces)
+                let tempPlayers = [...players]
+                tempPlayers[currentPlayerIndex].x = space.x; //Update the players array to reflect the changes
+                tempPlayers[currentPlayerIndex].y = space.y; //Update the players array to reflect the changes
+                setPlayers(tempPlayers)
+                setCurrentPlayer({...currentPlayer, x: space.x, y: space.y}) //Update current player
+
+            }).catch(() => {
+                console.error("Error while moving player")
+            })
+
+        }
+
+    }, [currentPlayer, currentPlayerIndex, gameId, players, spaces])
 
 
     const getGames = useCallback(async () => {
@@ -122,6 +147,8 @@ const GameContextProvider = ({children}: GameContextProviderPropsType) => {
         setGameId(-1);
         setLoaded(false)
     }, [])
+
+
 
     const selectPlayerOnSpace = useCallback(async (space : Space) => {
     if (!space.playerId) {
@@ -258,7 +285,8 @@ const player= useMemo<Player>(()=>{
                     addPlayer : addPlayer,
                     createNewGame : createNewGame,
                     removePlayer : removePlayer,
-                    removeBoard : removeBoard
+                    removeBoard : removeBoard,
+                    setSpecificPlayerOnSpace : setSpecificPlayerOnSpace
                 }
             }>
             {children} {/*See: https://reactjs.org/docs/composition-vs-inheritance.html*/}

@@ -11,5 +11,6 @@ export type Board = {
     //The "?" operator is a shorthand for currentPlayer : Player | undefined, which means that
     // the currentPlayer property can either be of type Player or undefined
     // see https://www.typescriptlang.org/docs/handbook/interfaces.html#optional-properties
-    currentPlayerDto? : Player
+    currentPlayerDto? : Player,
+    playAsSpecific? : Player
 }

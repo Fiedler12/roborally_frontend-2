@@ -18,6 +18,7 @@ export type GameContextType = {
     addPlayer : (boardId : number) => Promise<void>,
     removePlayer : (boardId : number, playerId : number) => Promise<void>,
     removeBoard : (boardID : number) => Promise<void>,
+    setSpecificPlayerOnSpace : (boardId : number, playerId : number, space : Space) => Promise<void>,
 }
 //Define a new context of type GameContextType
 //Below we define the "default" values which are set upon initialization of the context
@@ -31,6 +32,7 @@ const GameContext = createContext<GameContextType>({
     createNewGame : async () => {},
     removePlayer : async () => {},
     removeBoard : async  () => {},
+    setSpecificPlayerOnSpace : async () => {},
     loaded : false,
     board: {
         playerDtos: [],

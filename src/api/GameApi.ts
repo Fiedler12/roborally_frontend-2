@@ -46,6 +46,9 @@ class GameApi{
     public removePlayer (boardId : number, playerId : number) {
         return axios.put(`${this.BACKEND_URL}/deleteplayer/${boardId}/${playerId}`)
     }
+    public moveSpecificPlayer (boardId : number, playerId : number, space : Space) {
+
+    }
 }
 
 export default GameApi.getInstance()
