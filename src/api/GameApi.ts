@@ -38,6 +38,14 @@ class GameApi{
     public createNewGame (board : Board){
         return axios.post(`${this.BACKEND_URL}/board`,board)
     }
+
+    public removeBoard (boardId : number) {
+        return axios.put(`${this.BACKEND_URL}/deleteboard/${boardId}`)
+    }
+
+    public removePlayer (boardId : number, playerId : number) {
+        return axios.put(`${this.BACKEND_URL}/deleteplayer/${boardId}/${playerId}`)
+    }
 }
 
 export default GameApi.getInstance()

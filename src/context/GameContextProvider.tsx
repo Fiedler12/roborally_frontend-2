@@ -226,9 +226,21 @@ const player= useMemo<Player>(()=>{
 
     const createNewGame =useCallback(async (board : Board) => {
         await GameApi.createNewGame(board).then(()=>{
-
+            GameApi.getGames()
         }).catch(() => console.error(("errer create new Game")))
     },[])
+
+    const removePlayer =useCallback(async (boardId : number, playerId : number) => {
+        await GameApi.removePlayer(boardId, playerId).then(() => {
+            GameApi.getGames()
+        }).catch(() => console.error(("Error deleting")))
+    }, [])
+
+    const removeBoard =useCallback(async (boardId : number) => {
+        await GameApi.removeBoard(boardId).then(() => {
+            GameApi.getGames()
+        }).catch(() => console.error(("Error deleting")))
+    }, [])
 
     return (
         <GameContext.Provider
@@ -245,6 +257,8 @@ const player= useMemo<Player>(()=>{
                     player: player,
                     addPlayer : addPlayer,
                     createNewGame : createNewGame,
+                    removePlayer : removePlayer,
+                    removeBoard : removeBoard
                 }
             }>
             {children} {/*See: https://reactjs.org/docs/composition-vs-inheritance.html*/}
