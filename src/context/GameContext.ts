@@ -39,7 +39,8 @@ const GameContext = createContext<GameContextType>({
         boardName: "",
         currentPlayerDto: undefined,
         height: 0,
-        width: 0
+        width: 0,
+        playAsSpecific : undefined
     },
     player : {
         boardId : -1,

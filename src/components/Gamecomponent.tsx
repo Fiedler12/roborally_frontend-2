@@ -34,7 +34,7 @@ export const GameComponent: FunctionComponent<GameComponentProps> = ({game}) => 
 
                 <h1 onClick={onClickGame} className={styles.textcolor}>{game.name}:</h1>
                 <ul className={styles.textcolor}>
-                    <p>Select a player</p>
+                    <p>Click to remove a player</p>
                     {game.users.map((user, index) => <button key={index}
                                                              onClick={() => playAsPlayer(user.playerId)}>
                         {user.playerName}

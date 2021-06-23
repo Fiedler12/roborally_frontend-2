@@ -16,39 +16,6 @@ const GameContextProvider = ({children}: GameContextProviderPropsType) => {
     const [game] = useState<Game[]>([])
     const [games, setGames] = useState<Game[]>([])
     const [loaded, setLoaded] = useState<boolean>(false)
-    /*
-    useEffect(() => {
-        GameApi.getBoard(gameId).then(board => {
-            setSpaces(board.spaceDtos)
-            setPlayers(board.playerDtos)
-            setWidth(board.width)
-            setHeight(board.height)
-            setGameId(board.boardId)
-            setGameName(board.boardName)
-            if (board.currentPlayerDto) {
-                setCurrentPlayer(board.currentPlayerDto)
-                board.playerDtos.forEach((player,index)=>{
-                    if(player.playerId === board.currentPlayerDto?.playerId){
-                        setCurrentPlayerIndex(index)
-                    }
-                })
-
-            }
-            setLoaded(true)
-        }).catch(() => {
-            console.error("Error while fetching board from backend")
-        })
-    }, [])
-
-     */
-    //The code below is executed when the provider is rendered (inside App.tsx)
-    //The code should fetch the data from the API instead of using a static assignment
-    //Define a useState variable, note that useState returns an array, containing that state itself aswell as
-    // a function to set a new state value, here we use array destructuring (the [..., ...] notation).
-    // we also declare that the state variable and setter should be of type /take type Player[]
-
-
-
     const [players, setPlayers] = useState<Player[]>([])
     const playerCount = useMemo(() => players.length, [players])
     const [currentPlayerIndex, setCurrentPlayerIndex] = useState<number>(0)
@@ -83,10 +50,7 @@ const GameContextProvider = ({children}: GameContextProviderPropsType) => {
             })
 
         }
-
     }, [currentPlayer, currentPlayerIndex, gameId, players, spaces])
-
-
 
     const getGames = useCallback(async () => {
         await GameApi.getGames().then((value)=>{
@@ -258,7 +222,7 @@ const player= useMemo<Player>(()=>{
                     addPlayer : addPlayer,
                     createNewGame : createNewGame,
                     removePlayer : removePlayer,
-                    removeBoard : removeBoard
+                    removeBoard : removeBoard,
                 }
             }>
             {children} {/*See: https://reactjs.org/docs/composition-vs-inheritance.html*/}
